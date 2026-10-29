@@ -1,0 +1,32 @@
+{
+  "deal_id": "DEAL-004",
+  "property_name": {"value": "Cedar Point Flats", "quote": "Property: Cedar Point Flats", "status": "stated"},
+  "msa": {"value": "Austin", "quote": "Austin, TX 78745 (Austin MSA)", "status": "stated"},
+  "deal_purpose": {"value": "acquisition", "quote": "Sponsor is purchasing the asset and seeking maximum agency proceeds to keep equity light.", "status": "stated"},
+  "property_type": {"value": "multifamily", "quote": "Garden-style multifamily, 312 units, built 2012, stabilized", "status": "stated"},
+  "units": {"value": 312, "quote": "Garden-style multifamily, 312 units", "status": "stated"},
+  "stabilized": {"value": true, "quote": "Garden-style multifamily, 312 units, built 2012, stabilized", "status": "stated"},
+  "value_add_or_construction": {"value": "no", "quote": "Well-located stabilized community in south Austin.", "status": "stated"},
+  "loan_amount": {"value": 54000000, "quote": "Requested loan: $54,000,000", "status": "stated"},
+  "appraised_value": {"value": 66700000, "quote": "Appraisal: $66,700,000", "status": "stated"},
+  "gross_potential_rent": {"value": 7900000, "quote": "Gross potential rent: $7,900,000", "status": "stated"},
+  "effective_gross_income": {"value": 7270000, "quote": "Effective gross income: $7,270,000", "status": "stated"},
+  "noi": {"value": 4220000, "quote": "Net operating income (NOI): $4,220,000", "status": "stated"},
+  "annual_debt_service": {"value": 3323000, "quote": "Annual debt service at quoted terms: $3,323,000", "status": "stated"},
+  "rent_roll_total_units": {"value": 312, "quote": "312 units, 289 occupied (92.6% physical)", "status": "stated"},
+  "rent_roll_occupied_units": {"value": 289, "quote": "312 units, 289 occupied (92.6% physical)", "status": "stated"},
+  "avg_in_place_rent_monthly": {"value": 1980, "quote": "Average in-place rent: $1,980/unit/month", "status": "stated"},
+  "occupancy_sustained_90d": {"value": true, "quote": "Economic occupancy: 92%", "status": "stated", "note": "Supported by trailing-12-month economic occupancy."},
+  "sponsor_net_worth": {"value": 61000000, "quote": "Net worth: $61,000,000 (above loan amount)", "status": "stated"},
+  "sponsor_liquidity": {"value": 1900000, "quote": "Liquidity: $1,900,000 (≈ 7 months P&I)", "status": "stated"},
+  "stated_claims": {
+    "ltv_pct": {"value": 81, "quote": "Requested LTV: 81%", "status": "stated"},
+    "dscr": {"value": 1.27, "quote": "Implied DSCR at quoted terms: ~1.27x", "status": "stated"},
+    "occupancy_pct": {"value": 92.6, "quote": "312 units, 289 occupied (92.6% physical)", "status": "stated"},
+    "liquidity_months": {"value": 7, "quote": "Liquidity: $1,900,000 (≈ 7 months P&I)", "status": "stated"}
+  },
+  "data_quality": [],
+  "for_human": [
+    {"note": "Sponsor's net worth is mostly illiquid real estate equity, which matters given the thin liquidity.", "quote": "most net worth is tied up in real estate equity"}
+  ]
+}

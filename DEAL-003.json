@@ -1,0 +1,35 @@
+{
+  "deal_id": "DEAL-003",
+  "property_name": {"value": "Birchwood Commons", "quote": "Property: Birchwood Commons", "status": "stated"},
+  "msa": {"value": "Phoenix", "quote": "Phoenix, AZ 85021 (Phoenix MSA)", "status": "stated"},
+  "deal_purpose": {"value": "refinance", "quote": "seeks an agency refinance", "status": "stated"},
+  "property_type": {"value": "multifamily", "quote": "Mid-rise multifamily, 180 units, built 2014, stabilized", "status": "stated"},
+  "units": {"value": 180, "quote": "Mid-rise multifamily, 180 units", "status": "stated"},
+  "stabilized": {"value": true, "quote": "Sponsor reports the property is \"fully stabilized at 96% occupancy\"", "status": "stated", "note": "Sponsor claim; contradicted by rent roll."},
+  "value_add_or_construction": {"value": "possible", "quote": "Occupied but listed \"down — renovation, no rent\": 20 units", "status": "stated", "note": "Active renovation with 20 units offline may indicate value-add."},
+  "loan_amount": {"value": 28500000, "quote": "Requested loan: $28,500,000", "status": "stated"},
+  "appraised_value": {"value": null, "status": "not_stated", "note": "Appraisal: ordered, not yet received."},
+  "gross_potential_rent": {"value": 4300000, "quote": "Gross potential rent (sponsor estimate): $4,300,000", "status": "estimate"},
+  "effective_gross_income": {"value": null, "status": "not_stated", "note": "No T-12."},
+  "noi": {"value": null, "status": "not_stated", "note": "No T-12; only sponsor estimates of GPR and opex. NOI not derived from estimates."},
+  "annual_debt_service": {"value": null, "status": "not_stated", "note": "DSCR: not stated; no debt service given."},
+  "rent_roll_total_units": {"value": 180, "quote": "180 units listed", "status": "stated"},
+  "rent_roll_occupied_units": {"value": 141, "quote": "Occupied and paying: 141 units", "status": "stated", "note": "Plus 20 'occupied' units down for renovation paying no rent."},
+  "avg_in_place_rent_monthly": {"value": 1640, "quote": "Average in-place rent on paying units: $1,640/unit/month", "status": "stated"},
+  "occupancy_sustained_90d": {"value": null, "status": "not_stated", "note": "No occupancy history; rent roll is 8 months old."},
+  "sponsor_net_worth": {"value": 36000000, "quote": "Net worth: $36,000,000", "status": "stated"},
+  "sponsor_liquidity": {"value": 3200000, "quote": "Liquidity: $3,200,000", "status": "stated"},
+  "stated_claims": {
+    "ltv_pct": {"value": 70, "quote": "Requested LTV: \"approximately 70%, pending appraisal\"", "status": "estimate"},
+    "occupancy_pct": {"value": 96, "quote": "Sponsor-stated occupancy: 96%", "status": "stated"}
+  },
+  "data_quality": [
+    {"issue": "T-12 operating statement missing.", "quote": "A trailing 12-month operating statement was not included in the package."},
+    {"issue": "Appraisal not received; LTV cannot be computed.", "quote": "Appraisal: ordered, not yet received"},
+    {"issue": "Rent roll is stale.", "quote": "Rent roll snapshot (as provided, dated 8 months ago)"},
+    {"issue": "Stated 96% occupancy contradicts the rent roll (141 of 180 paying).", "quote": "Occupied and paying: 141 units"}
+  ],
+  "for_human": [
+    {"note": "Sponsor had an asset in forbearance in 2021 (resolved). Not a box criterion; for underwriter awareness.", "quote": "one was in forbearance during 2021, since resolved"}
+  ]
+}

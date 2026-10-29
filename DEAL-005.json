@@ -1,0 +1,32 @@
+{
+  "deal_id": "DEAL-005",
+  "property_name": {"value": "Watermark at Germantown", "quote": "Property: Watermark at Germantown", "status": "stated"},
+  "msa": {"value": "Nashville", "quote": "Nashville, TN 37207 (Nashville MSA)", "status": "stated"},
+  "deal_purpose": {"value": null, "status": "not_stated", "note": "Seeks long-term fixed-rate agency debt; refinance vs acquisition not stated."},
+  "property_type": {"value": "multifamily", "quote": "Mid-rise multifamily, 210 units, built 2017, stabilized", "status": "stated"},
+  "units": {"value": 210, "quote": "Mid-rise multifamily, 210 units", "status": "stated"},
+  "stabilized": {"value": true, "quote": "Mid-rise multifamily, 210 units, built 2017, stabilized", "status": "stated"},
+  "value_add_or_construction": {"value": "no", "quote": "Excellent stabilized asset in a high-growth Nashville submarket.", "status": "stated"},
+  "loan_amount": {"value": 39360000, "quote": "Requested loan amount: $39,360,000", "status": "stated"},
+  "appraised_value": {"value": 48000000, "quote": "Third-party appraisal: $48,000,000", "status": "stated"},
+  "gross_potential_rent": {"value": null, "status": "not_stated", "note": "GPR and economic occupancy not given."},
+  "effective_gross_income": {"value": 5140000, "quote": "Effective gross income: $5,140,000", "status": "stated"},
+  "noi": {"value": 2950000, "quote": "Net operating income (NOI): $2,950,000", "status": "stated"},
+  "annual_debt_service": {"value": 2500000, "quote": "Annual debt service at quoted terms: $2,500,000", "status": "stated"},
+  "rent_roll_total_units": {"value": 210, "quote": "210 units, 191 occupied (91% physical)", "status": "stated"},
+  "rent_roll_occupied_units": {"value": 191, "quote": "210 units, 191 occupied (91% physical)", "status": "stated"},
+  "avg_in_place_rent_monthly": {"value": 1910, "quote": "Average in-place rent: $1,910/unit/month", "status": "stated"},
+  "occupancy_sustained_90d": {"value": null, "status": "not_stated", "note": "Only a point-in-time rent roll; no occupancy history."},
+  "sponsor_net_worth": {"value": 52000000, "quote": "Net worth: $52,000,000 (above loan amount)", "status": "stated"},
+  "sponsor_liquidity": {"value": 3800000, "quote": "Liquidity: $3,800,000 (≈ 18 months P&I)", "status": "stated"},
+  "stated_claims": {
+    "ltv_pct": {"value": 75, "quote": "Conservatively leveraged at roughly 75% with healthy debt service coverage around 1.30x.", "status": "stated"},
+    "dscr": {"value": 1.30, "quote": "Conservatively leveraged at roughly 75% with healthy debt service coverage around 1.30x.", "status": "stated"},
+    "occupancy_pct": {"value": 91, "quote": "210 units, 191 occupied (91% physical)", "status": "stated"},
+    "liquidity_months": {"value": 18, "quote": "Liquidity: $3,800,000 (≈ 18 months P&I)", "status": "stated"}
+  },
+  "data_quality": [
+    {"issue": "Leverage and coverage come only from the broker narrative; exhibits don't state them.", "quote": "specific LTV and DSCR figures are not separately stated in the financial exhibits."}
+  ],
+  "for_human": []
+}

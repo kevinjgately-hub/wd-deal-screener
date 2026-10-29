@@ -1,0 +1,32 @@
+{
+  "deal_id": "DEAL-002",
+  "property_name": {"value": "The Harborview", "quote": "Property: The Harborview", "status": "stated"},
+  "msa": {"value": "Charleston", "quote": "Charleston, SC 29401 (Charleston MSA)", "status": "stated"},
+  "deal_purpose": {"value": null, "status": "not_stated", "note": "Refinance vs acquisition not stated."},
+  "property_type": {"value": "hotel", "quote": "140-key boutique hotel with 12 extended-stay residential units, built 2016", "status": "stated"},
+  "units": {"value": 12, "quote": "12 extended-stay units, 11 occupied on monthly terms", "status": "stated"},
+  "stabilized": {"value": null, "status": "not_stated", "note": "Operating hotel; multifamily stabilization not applicable."},
+  "value_add_or_construction": {"value": "no", "quote": "Recently renovated waterfront property operating as a boutique hotel", "status": "stated"},
+  "loan_amount": {"value": 41000000, "quote": "Requested loan: $41,000,000", "status": "stated"},
+  "appraised_value": {"value": 62000000, "quote": "Appraisal (going-concern): $62,000,000", "status": "stated"},
+  "gross_potential_rent": {"value": null, "status": "not_stated", "note": "Hotel revenue reported as rooms + F&B instead."},
+  "effective_gross_income": {"value": 12100000, "quote": "Total revenue: $12,100,000", "status": "stated"},
+  "noi": {"value": 4200000, "quote": "Net operating income (NOI): $4,200,000", "status": "stated"},
+  "annual_debt_service": {"value": null, "status": "not_stated", "note": "Only an 'implied DSCR ~1.45x' is given; debt service amount not stated."},
+  "rent_roll_total_units": {"value": 12, "quote": "12 extended-stay units, 11 occupied on monthly terms", "status": "stated"},
+  "rent_roll_occupied_units": {"value": 11, "quote": "12 extended-stay units, 11 occupied on monthly terms", "status": "stated"},
+  "avg_in_place_rent_monthly": {"value": 4200, "quote": "Average monthly rate: $4,200/unit", "status": "stated"},
+  "occupancy_sustained_90d": {"value": null, "status": "not_stated", "note": "Only hotel room occupancy (78%) given."},
+  "sponsor_net_worth": {"value": 74000000, "quote": "Net worth: $74,000,000", "status": "stated"},
+  "sponsor_liquidity": {"value": 9500000, "quote": "Liquidity: $9,500,000", "status": "stated"},
+  "stated_claims": {
+    "ltv_pct": {"value": 66, "quote": "Requested LTV: 66%", "status": "stated"},
+    "dscr": {"value": 1.45, "quote": "Implied DSCR at quoted terms: ~1.45x", "status": "stated"}
+  },
+  "data_quality": [
+    {"issue": "Sponsor's framing conflicts with the asset: income is hotel rooms and F&B, not residential rent.", "quote": "Sponsor describes it as a \"mixed-use multifamily-adjacent hospitality asset\""}
+  ],
+  "for_human": [
+    {"note": "Sponsor is a hospitality operator. Possibly a fit for a different W&D lending product; worth routing to the producer instead of dropping silently.", "quote": "Hospitality operator with 6 flagged and independent hotels"}
+  ]
+}

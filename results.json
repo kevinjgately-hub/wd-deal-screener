@@ -1,0 +1,1351 @@
+{
+  "run_at": "2026-10-28 22:42",
+  "box": {
+    "version": "1.0-illustrative",
+    "owner": "Credit / Underwriting",
+    "effective": "2026-10-27",
+    "hard": {
+      "asset_type": "multifamily",
+      "min_units": 5,
+      "must_be_stabilized": true,
+      "excluded_property_types": [
+        "hotel",
+        "student_heavy",
+        "senior_assisted",
+        "raw_land",
+        "single_family"
+      ],
+      "student_max_pct": 50,
+      "loan_min": 5000000,
+      "loan_max": 75000000,
+      "top75_msa_reference": [
+        "Columbus",
+        "Phoenix",
+        "Austin",
+        "Nashville",
+        "Atlanta",
+        "Dallas",
+        "Houston",
+        "Charlotte",
+        "Denver",
+        "Tampa"
+      ]
+    },
+    "graduated": {
+      "ltv_max_pct": {
+        "limit": 80.0,
+        "review_band": 82.5
+      },
+      "dscr_min": {
+        "limit": 1.25,
+        "review_band": 1.15
+      },
+      "occupancy_min_pct": {
+        "limit": 90.0,
+        "review_band": 87.0
+      },
+      "sponsor_nw_to_loan_min": {
+        "limit": 1.0,
+        "review_band": 0.75
+      },
+      "liquidity_months_min": {
+        "limit": 9.0,
+        "review_band": 6.0
+      }
+    },
+    "integrity": {
+      "stated_vs_computed_ltv_tolerance_pts": 1.0,
+      "stated_vs_computed_dscr_tolerance": 0.03,
+      "rent_roll_vs_egi_tolerance_pct": 10.0,
+      "occupancy_conflict_tolerance_pts": 3.0
+    }
+  },
+  "deals": [
+    {
+      "deal_id": "DEAL-001",
+      "status": "Advance",
+      "status_label": "Advance",
+      "open_items": 0,
+      "cushion": 0.03942652329749102,
+      "fixed_outcome": "pass",
+      "unreliable_metrics": [],
+      "metrics": {
+        "ltv_pct": {
+          "value": 71.11111111111111,
+          "formula": "loan ÷ appraised value",
+          "inputs": [
+            "loan_amount",
+            "appraised_value"
+          ]
+        },
+        "dscr": {
+          "value": 1.3800705467372134,
+          "formula": "NOI ÷ annual debt service",
+          "inputs": [
+            "noi",
+            "annual_debt_service"
+          ]
+        },
+        "occupancy_pct": {
+          "value": 93.54838709677419,
+          "formula": "occupied units ÷ total units (rent roll)",
+          "inputs": [
+            "rent_roll_occupied_units",
+            "rent_roll_total_units"
+          ]
+        },
+        "nw_to_loan": {
+          "value": 1.8125,
+          "formula": "sponsor net worth ÷ loan",
+          "inputs": [
+            "sponsor_net_worth",
+            "loan_amount"
+          ]
+        },
+        "liquidity_months": {
+          "value": 21.693121693121693,
+          "formula": "sponsor liquidity ÷ (annual debt service ÷ 12)",
+          "inputs": [
+            "sponsor_liquidity",
+            "annual_debt_service"
+          ]
+        },
+        "rent_roll_annual": {
+          "value": 5164320,
+          "formula": "occupied units × avg in-place rent × 12",
+          "inputs": [
+            "rent_roll_occupied_units",
+            "avg_in_place_rent_monthly"
+          ]
+        },
+        "egi": {
+          "value": 5310000,
+          "formula": "stated",
+          "inputs": [
+            "effective_gross_income"
+          ]
+        }
+      },
+      "findings": [
+        {
+          "code": "asset_type_ok",
+          "kind": "hard",
+          "result": "pass",
+          "label": "Asset type",
+          "detail": "Multifamily."
+        },
+        {
+          "code": "ltv_ok",
+          "kind": "graduated",
+          "result": "pass",
+          "label": "LTV",
+          "detail": "71.1% vs box ≤ 80.0%"
+        },
+        {
+          "code": "dscr_ok",
+          "kind": "graduated",
+          "result": "pass",
+          "label": "DSCR",
+          "detail": "1.38x vs box ≥ 1.25x"
+        },
+        {
+          "code": "occupancy_ok",
+          "kind": "graduated",
+          "result": "pass",
+          "label": "Physical occupancy",
+          "detail": "93.5% vs box ≥ 90.0%"
+        },
+        {
+          "code": "nw_ok",
+          "kind": "graduated",
+          "result": "pass",
+          "label": "Sponsor net worth ÷ loan",
+          "detail": "1.81x vs box ≥ 1.00x"
+        },
+        {
+          "code": "liquidity_ok",
+          "kind": "graduated",
+          "result": "pass",
+          "label": "Sponsor liquidity",
+          "detail": "21.7 mo vs box ≥ 9.0 mo"
+        }
+      ],
+      "extraction": {
+        "deal_id": "DEAL-001",
+        "property_name": {
+          "value": "Maple Run Apartments",
+          "quote": "Property: Maple Run Apartments",
+          "status": "stated"
+        },
+        "msa": {
+          "value": "Columbus",
+          "quote": "Columbus, OH 43215 (Columbus MSA)",
+          "status": "stated"
+        },
+        "deal_purpose": {
+          "value": "refinance",
+          "quote": "Sponsor is refinancing existing bank debt and seeking agency take-out.",
+          "status": "stated"
+        },
+        "property_type": {
+          "value": "multifamily",
+          "quote": "Garden-style multifamily, 248 units, built 2009, stabilized",
+          "status": "stated"
+        },
+        "units": {
+          "value": 248,
+          "quote": "Garden-style multifamily, 248 units",
+          "status": "stated"
+        },
+        "stabilized": {
+          "value": true,
+          "quote": "Garden-style multifamily, 248 units, built 2009, stabilized",
+          "status": "stated"
+        },
+        "value_add_or_construction": {
+          "value": "no",
+          "quote": "Stabilized garden apartment community",
+          "status": "stated"
+        },
+        "loan_amount": {
+          "value": 32000000,
+          "quote": "Requested loan: $32,000,000",
+          "status": "stated"
+        },
+        "appraised_value": {
+          "value": 45000000,
+          "quote": "Third-party appraisal: $45,000,000",
+          "status": "stated"
+        },
+        "gross_potential_rent": {
+          "value": 5520000,
+          "quote": "Gross potential rent: $5,520,000",
+          "status": "stated"
+        },
+        "effective_gross_income": {
+          "value": 5310000,
+          "quote": "Effective gross income: $5,310,000",
+          "status": "stated"
+        },
+        "noi": {
+          "value": 3130000,
+          "quote": "Net operating income (NOI): $3,130,000",
+          "status": "stated"
+        },
+        "annual_debt_service": {
+          "value": 2268000,
+          "quote": "Annual debt service at quoted terms: $2,268,000",
+          "status": "stated"
+        },
+        "rent_roll_total_units": {
+          "value": 248,
+          "quote": "248 units, 232 occupied (93.5% physical)",
+          "status": "stated"
+        },
+        "rent_roll_occupied_units": {
+          "value": 232,
+          "quote": "248 units, 232 occupied (93.5% physical)",
+          "status": "stated"
+        },
+        "avg_in_place_rent_monthly": {
+          "value": 1855,
+          "quote": "Average in-place rent: $1,855/unit/month",
+          "status": "stated"
+        },
+        "occupancy_sustained_90d": {
+          "value": true,
+          "quote": "Property has run 93–95% occupancy for the trailing two years.",
+          "status": "stated"
+        },
+        "sponsor_net_worth": {
+          "value": 58000000,
+          "quote": "Net worth: $58,000,000",
+          "status": "stated"
+        },
+        "sponsor_liquidity": {
+          "value": 4100000,
+          "quote": "Liquidity: $4,100,000 (≈ 21 months P&I)",
+          "status": "stated"
+        },
+        "stated_claims": {
+          "ltv_pct": {
+            "value": 71,
+            "quote": "Requested LTV: 71%",
+            "status": "stated"
+          },
+          "dscr": {
+            "value": 1.38,
+            "quote": "Implied DSCR at quoted terms: ~1.38x",
+            "status": "stated"
+          },
+          "occupancy_pct": {
+            "value": 93.5,
+            "quote": "248 units, 232 occupied (93.5% physical)",
+            "status": "stated"
+          },
+          "liquidity_months": {
+            "value": 21,
+            "quote": "Liquidity: $4,100,000 (≈ 21 months P&I)",
+            "status": "stated"
+          }
+        },
+        "data_quality": [],
+        "for_human": []
+      }
+    },
+    {
+      "deal_id": "DEAL-004",
+      "status": "Needs review",
+      "status_label": "Needs review",
+      "open_items": 2,
+      "cushion": -0.23763667368843422,
+      "fixed_outcome": "pass",
+      "unreliable_metrics": [],
+      "metrics": {
+        "ltv_pct": {
+          "value": 80.95952023988005,
+          "formula": "loan ÷ appraised value",
+          "inputs": [
+            "loan_amount",
+            "appraised_value"
+          ]
+        },
+        "dscr": {
+          "value": 1.2699368040926873,
+          "formula": "NOI ÷ annual debt service",
+          "inputs": [
+            "noi",
+            "annual_debt_service"
+          ]
+        },
+        "occupancy_pct": {
+          "value": 92.62820512820514,
+          "formula": "occupied units ÷ total units (rent roll)",
+          "inputs": [
+            "rent_roll_occupied_units",
+            "rent_roll_total_units"
+          ]
+        },
+        "nw_to_loan": {
+          "value": 1.1296296296296295,
+          "formula": "sponsor net worth ÷ loan",
+          "inputs": [
+            "sponsor_net_worth",
+            "loan_amount"
+          ]
+        },
+        "liquidity_months": {
+          "value": 6.861269936804092,
+          "formula": "sponsor liquidity ÷ (annual debt service ÷ 12)",
+          "inputs": [
+            "sponsor_liquidity",
+            "annual_debt_service"
+          ]
+        },
+        "rent_roll_annual": {
+          "value": 6866640,
+          "formula": "occupied units × avg in-place rent × 12",
+          "inputs": [
+            "rent_roll_occupied_units",
+            "avg_in_place_rent_monthly"
+          ]
+        },
+        "egi": {
+          "value": 7270000,
+          "formula": "stated",
+          "inputs": [
+            "effective_gross_income"
+          ]
+        }
+      },
+      "findings": [
+        {
+          "code": "asset_type_ok",
+          "kind": "hard",
+          "result": "pass",
+          "label": "Asset type",
+          "detail": "Multifamily."
+        },
+        {
+          "code": "ltv_near_line",
+          "kind": "graduated",
+          "result": "near",
+          "label": "LTV",
+          "detail": "81.0% vs box ≤ 80.0% (review band to 82.5%)"
+        },
+        {
+          "code": "dscr_ok",
+          "kind": "graduated",
+          "result": "pass",
+          "label": "DSCR",
+          "detail": "1.27x vs box ≥ 1.25x"
+        },
+        {
+          "code": "occupancy_ok",
+          "kind": "graduated",
+          "result": "pass",
+          "label": "Physical occupancy",
+          "detail": "92.6% vs box ≥ 90.0%"
+        },
+        {
+          "code": "nw_ok",
+          "kind": "graduated",
+          "result": "pass",
+          "label": "Sponsor net worth ÷ loan",
+          "detail": "1.13x vs box ≥ 1.00x"
+        },
+        {
+          "code": "liquidity_near_line",
+          "kind": "graduated",
+          "result": "near",
+          "label": "Sponsor liquidity",
+          "detail": "6.9 mo vs box ≥ 9.0 mo (review band to 6.0 mo)"
+        }
+      ],
+      "extraction": {
+        "deal_id": "DEAL-004",
+        "property_name": {
+          "value": "Cedar Point Flats",
+          "quote": "Property: Cedar Point Flats",
+          "status": "stated"
+        },
+        "msa": {
+          "value": "Austin",
+          "quote": "Austin, TX 78745 (Austin MSA)",
+          "status": "stated"
+        },
+        "deal_purpose": {
+          "value": "acquisition",
+          "quote": "Sponsor is purchasing the asset and seeking maximum agency proceeds to keep equity light.",
+          "status": "stated"
+        },
+        "property_type": {
+          "value": "multifamily",
+          "quote": "Garden-style multifamily, 312 units, built 2012, stabilized",
+          "status": "stated"
+        },
+        "units": {
+          "value": 312,
+          "quote": "Garden-style multifamily, 312 units",
+          "status": "stated"
+        },
+        "stabilized": {
+          "value": true,
+          "quote": "Garden-style multifamily, 312 units, built 2012, stabilized",
+          "status": "stated"
+        },
+        "value_add_or_construction": {
+          "value": "no",
+          "quote": "Well-located stabilized community in south Austin.",
+          "status": "stated"
+        },
+        "loan_amount": {
+          "value": 54000000,
+          "quote": "Requested loan: $54,000,000",
+          "status": "stated"
+        },
+        "appraised_value": {
+          "value": 66700000,
+          "quote": "Appraisal: $66,700,000",
+          "status": "stated"
+        },
+        "gross_potential_rent": {
+          "value": 7900000,
+          "quote": "Gross potential rent: $7,900,000",
+          "status": "stated"
+        },
+        "effective_gross_income": {
+          "value": 7270000,
+          "quote": "Effective gross income: $7,270,000",
+          "status": "stated"
+        },
+        "noi": {
+          "value": 4220000,
+          "quote": "Net operating income (NOI): $4,220,000",
+          "status": "stated"
+        },
+        "annual_debt_service": {
+          "value": 3323000,
+          "quote": "Annual debt service at quoted terms: $3,323,000",
+          "status": "stated"
+        },
+        "rent_roll_total_units": {
+          "value": 312,
+          "quote": "312 units, 289 occupied (92.6% physical)",
+          "status": "stated"
+        },
+        "rent_roll_occupied_units": {
+          "value": 289,
+          "quote": "312 units, 289 occupied (92.6% physical)",
+          "status": "stated"
+        },
+        "avg_in_place_rent_monthly": {
+          "value": 1980,
+          "quote": "Average in-place rent: $1,980/unit/month",
+          "status": "stated"
+        },
+        "occupancy_sustained_90d": {
+          "value": true,
+          "quote": "Economic occupancy: 92%",
+          "status": "stated",
+          "note": "Supported by trailing-12-month economic occupancy."
+        },
+        "sponsor_net_worth": {
+          "value": 61000000,
+          "quote": "Net worth: $61,000,000 (above loan amount)",
+          "status": "stated"
+        },
+        "sponsor_liquidity": {
+          "value": 1900000,
+          "quote": "Liquidity: $1,900,000 (≈ 7 months P&I)",
+          "status": "stated"
+        },
+        "stated_claims": {
+          "ltv_pct": {
+            "value": 81,
+            "quote": "Requested LTV: 81%",
+            "status": "stated"
+          },
+          "dscr": {
+            "value": 1.27,
+            "quote": "Implied DSCR at quoted terms: ~1.27x",
+            "status": "stated"
+          },
+          "occupancy_pct": {
+            "value": 92.6,
+            "quote": "312 units, 289 occupied (92.6% physical)",
+            "status": "stated"
+          },
+          "liquidity_months": {
+            "value": 7,
+            "quote": "Liquidity: $1,900,000 (≈ 7 months P&I)",
+            "status": "stated"
+          }
+        },
+        "data_quality": [],
+        "for_human": [
+          {
+            "note": "Sponsor's net worth is mostly illiquid real estate equity, which matters given the thin liquidity.",
+            "quote": "most net worth is tied up in real estate equity"
+          }
+        ]
+      }
+    },
+    {
+      "deal_id": "DEAL-005",
+      "status": "Needs review",
+      "status_label": "Needs review",
+      "open_items": 7,
+      "cushion": -0.05600000000000005,
+      "fixed_outcome": "review",
+      "unreliable_metrics": [],
+      "metrics": {
+        "ltv_pct": {
+          "value": 82.0,
+          "formula": "loan ÷ appraised value",
+          "inputs": [
+            "loan_amount",
+            "appraised_value"
+          ]
+        },
+        "dscr": {
+          "value": 1.18,
+          "formula": "NOI ÷ annual debt service",
+          "inputs": [
+            "noi",
+            "annual_debt_service"
+          ]
+        },
+        "occupancy_pct": {
+          "value": 90.95238095238095,
+          "formula": "occupied units ÷ total units (rent roll)",
+          "inputs": [
+            "rent_roll_occupied_units",
+            "rent_roll_total_units"
+          ]
+        },
+        "nw_to_loan": {
+          "value": 1.3211382113821137,
+          "formula": "sponsor net worth ÷ loan",
+          "inputs": [
+            "sponsor_net_worth",
+            "loan_amount"
+          ]
+        },
+        "liquidity_months": {
+          "value": 18.24,
+          "formula": "sponsor liquidity ÷ (annual debt service ÷ 12)",
+          "inputs": [
+            "sponsor_liquidity",
+            "annual_debt_service"
+          ]
+        },
+        "rent_roll_annual": {
+          "value": 4377720,
+          "formula": "occupied units × avg in-place rent × 12",
+          "inputs": [
+            "rent_roll_occupied_units",
+            "avg_in_place_rent_monthly"
+          ]
+        },
+        "egi": {
+          "value": 5140000,
+          "formula": "stated",
+          "inputs": [
+            "effective_gross_income"
+          ]
+        }
+      },
+      "findings": [
+        {
+          "code": "asset_type_ok",
+          "kind": "hard",
+          "result": "pass",
+          "label": "Asset type",
+          "detail": "Multifamily."
+        },
+        {
+          "code": "ltv_near_line",
+          "kind": "graduated",
+          "result": "near",
+          "label": "LTV",
+          "detail": "82.0% vs box ≤ 80.0% (review band to 82.5%)"
+        },
+        {
+          "code": "dscr_near_line",
+          "kind": "graduated",
+          "result": "near",
+          "label": "DSCR",
+          "detail": "1.18x vs box ≥ 1.25x (review band to 1.15x)"
+        },
+        {
+          "code": "occupancy_ok",
+          "kind": "graduated",
+          "result": "pass",
+          "label": "Physical occupancy",
+          "detail": "91.0% vs box ≥ 90.0%"
+        },
+        {
+          "code": "nw_ok",
+          "kind": "graduated",
+          "result": "pass",
+          "label": "Sponsor net worth ÷ loan",
+          "detail": "1.32x vs box ≥ 1.00x"
+        },
+        {
+          "code": "liquidity_ok",
+          "kind": "graduated",
+          "result": "pass",
+          "label": "Sponsor liquidity",
+          "detail": "18.2 mo vs box ≥ 9.0 mo"
+        },
+        {
+          "code": "occupancy_history_missing",
+          "kind": "graduated",
+          "result": "unknown",
+          "label": "Occupancy sustained 90+ days",
+          "detail": "The package doesn't show occupancy over time."
+        },
+        {
+          "code": "broker_ltv_mismatch",
+          "kind": "integrity",
+          "result": "flag",
+          "label": "Stated vs computed",
+          "detail": "Package says 75.0%; components give 82.0%. The computed figure is used."
+        },
+        {
+          "code": "broker_dscr_mismatch",
+          "kind": "integrity",
+          "result": "flag",
+          "label": "Stated vs computed",
+          "detail": "Package says 1.30x; components give 1.18x. The computed figure is used."
+        },
+        {
+          "code": "income_reconciliation_gap",
+          "kind": "integrity",
+          "result": "flag",
+          "label": "Income doesn't reconcile",
+          "detail": "Rent roll supports $4,377,720/yr; T-12 EGI is $5,140,000 (15% gap)."
+        },
+        {
+          "code": "package_issue",
+          "kind": "package",
+          "result": "flag",
+          "label": "Package issue",
+          "detail": "Leverage and coverage come only from the broker narrative; exhibits don't state them."
+        }
+      ],
+      "extraction": {
+        "deal_id": "DEAL-005",
+        "property_name": {
+          "value": "Watermark at Germantown",
+          "quote": "Property: Watermark at Germantown",
+          "status": "stated"
+        },
+        "msa": {
+          "value": "Nashville",
+          "quote": "Nashville, TN 37207 (Nashville MSA)",
+          "status": "stated"
+        },
+        "deal_purpose": {
+          "value": null,
+          "status": "not_stated",
+          "note": "Seeks long-term fixed-rate agency debt; refinance vs acquisition not stated."
+        },
+        "property_type": {
+          "value": "multifamily",
+          "quote": "Mid-rise multifamily, 210 units, built 2017, stabilized",
+          "status": "stated"
+        },
+        "units": {
+          "value": 210,
+          "quote": "Mid-rise multifamily, 210 units",
+          "status": "stated"
+        },
+        "stabilized": {
+          "value": true,
+          "quote": "Mid-rise multifamily, 210 units, built 2017, stabilized",
+          "status": "stated"
+        },
+        "value_add_or_construction": {
+          "value": "no",
+          "quote": "Excellent stabilized asset in a high-growth Nashville submarket.",
+          "status": "stated"
+        },
+        "loan_amount": {
+          "value": 39360000,
+          "quote": "Requested loan amount: $39,360,000",
+          "status": "stated"
+        },
+        "appraised_value": {
+          "value": 48000000,
+          "quote": "Third-party appraisal: $48,000,000",
+          "status": "stated"
+        },
+        "gross_potential_rent": {
+          "value": null,
+          "status": "not_stated",
+          "note": "GPR and economic occupancy not given."
+        },
+        "effective_gross_income": {
+          "value": 5140000,
+          "quote": "Effective gross income: $5,140,000",
+          "status": "stated"
+        },
+        "noi": {
+          "value": 2950000,
+          "quote": "Net operating income (NOI): $2,950,000",
+          "status": "stated"
+        },
+        "annual_debt_service": {
+          "value": 2500000,
+          "quote": "Annual debt service at quoted terms: $2,500,000",
+          "status": "stated"
+        },
+        "rent_roll_total_units": {
+          "value": 210,
+          "quote": "210 units, 191 occupied (91% physical)",
+          "status": "stated"
+        },
+        "rent_roll_occupied_units": {
+          "value": 191,
+          "quote": "210 units, 191 occupied (91% physical)",
+          "status": "stated"
+        },
+        "avg_in_place_rent_monthly": {
+          "value": 1910,
+          "quote": "Average in-place rent: $1,910/unit/month",
+          "status": "stated"
+        },
+        "occupancy_sustained_90d": {
+          "value": null,
+          "status": "not_stated",
+          "note": "Only a point-in-time rent roll; no occupancy history."
+        },
+        "sponsor_net_worth": {
+          "value": 52000000,
+          "quote": "Net worth: $52,000,000 (above loan amount)",
+          "status": "stated"
+        },
+        "sponsor_liquidity": {
+          "value": 3800000,
+          "quote": "Liquidity: $3,800,000 (≈ 18 months P&I)",
+          "status": "stated"
+        },
+        "stated_claims": {
+          "ltv_pct": {
+            "value": 75,
+            "quote": "Conservatively leveraged at roughly 75% with healthy debt service coverage around 1.30x.",
+            "status": "stated"
+          },
+          "dscr": {
+            "value": 1.3,
+            "quote": "Conservatively leveraged at roughly 75% with healthy debt service coverage around 1.30x.",
+            "status": "stated"
+          },
+          "occupancy_pct": {
+            "value": 91,
+            "quote": "210 units, 191 occupied (91% physical)",
+            "status": "stated"
+          },
+          "liquidity_months": {
+            "value": 18,
+            "quote": "Liquidity: $3,800,000 (≈ 18 months P&I)",
+            "status": "stated"
+          }
+        },
+        "data_quality": [
+          {
+            "issue": "Leverage and coverage come only from the broker narrative; exhibits don't state them.",
+            "quote": "specific LTV and DSCR figures are not separately stated in the financial exhibits."
+          }
+        ],
+        "for_human": []
+      }
+    },
+    {
+      "deal_id": "DEAL-003",
+      "status": "Needs review",
+      "status_label": "Needs review",
+      "open_items": 11,
+      "cushion": -0.12962962962962968,
+      "fixed_outcome": "review",
+      "unreliable_metrics": [
+        "occupancy_pct"
+      ],
+      "metrics": {
+        "ltv_pct": {
+          "value": null,
+          "formula": "loan ÷ appraised value",
+          "inputs": [
+            "loan_amount",
+            "appraised_value"
+          ]
+        },
+        "dscr": {
+          "value": null,
+          "formula": "NOI ÷ annual debt service",
+          "inputs": [
+            "noi",
+            "annual_debt_service"
+          ]
+        },
+        "occupancy_pct": {
+          "value": 78.33333333333333,
+          "formula": "occupied units ÷ total units (rent roll)",
+          "inputs": [
+            "rent_roll_occupied_units",
+            "rent_roll_total_units"
+          ]
+        },
+        "nw_to_loan": {
+          "value": 1.263157894736842,
+          "formula": "sponsor net worth ÷ loan",
+          "inputs": [
+            "sponsor_net_worth",
+            "loan_amount"
+          ]
+        },
+        "liquidity_months": {
+          "value": null,
+          "formula": "sponsor liquidity ÷ (annual debt service ÷ 12)",
+          "inputs": [
+            "sponsor_liquidity",
+            "annual_debt_service"
+          ]
+        },
+        "rent_roll_annual": {
+          "value": 2774880,
+          "formula": "occupied units × avg in-place rent × 12",
+          "inputs": [
+            "rent_roll_occupied_units",
+            "avg_in_place_rent_monthly"
+          ]
+        },
+        "egi": {
+          "value": null,
+          "formula": "stated",
+          "inputs": [
+            "effective_gross_income"
+          ]
+        }
+      },
+      "findings": [
+        {
+          "code": "asset_type_ok",
+          "kind": "hard",
+          "result": "pass",
+          "label": "Asset type",
+          "detail": "Multifamily."
+        },
+        {
+          "code": "possible_value_add",
+          "kind": "hard",
+          "result": "unknown",
+          "label": "Stabilized",
+          "detail": "Package suggests an active renovation. A human should confirm the asset is stabilized, not value-add."
+        },
+        {
+          "code": "missing_appraisal",
+          "kind": "graduated",
+          "result": "unknown",
+          "label": "LTV",
+          "detail": "Can't compute (loan ÷ appraised value): an input isn't in the package."
+        },
+        {
+          "code": "missing_noi",
+          "kind": "graduated",
+          "result": "unknown",
+          "label": "DSCR",
+          "detail": "Can't compute (NOI ÷ annual debt service): an input isn't in the package."
+        },
+        {
+          "code": "occupancy_conflicting",
+          "kind": "graduated",
+          "result": "unknown",
+          "label": "Physical occupancy",
+          "detail": "Sources disagree, so no reliable figure (rent roll gives 78.3%). A human resolves it before this criterion is scored."
+        },
+        {
+          "code": "nw_ok",
+          "kind": "graduated",
+          "result": "pass",
+          "label": "Sponsor net worth ÷ loan",
+          "detail": "1.26x vs box ≥ 1.00x"
+        },
+        {
+          "code": "missing_debt_service",
+          "kind": "graduated",
+          "result": "unknown",
+          "label": "Sponsor liquidity",
+          "detail": "Can't compute (sponsor liquidity ÷ (annual debt service ÷ 12)): an input isn't in the package."
+        },
+        {
+          "code": "occupancy_history_missing",
+          "kind": "graduated",
+          "result": "unknown",
+          "label": "Occupancy sustained 90+ days",
+          "detail": "The package doesn't show occupancy over time."
+        },
+        {
+          "code": "occupancy_conflict",
+          "kind": "integrity",
+          "result": "flag",
+          "label": "Occupancy doesn't reconcile",
+          "detail": "Package says 96%; rent roll shows 78.3%. Not averaged; a human checks it."
+        },
+        {
+          "code": "package_issue",
+          "kind": "package",
+          "result": "flag",
+          "label": "Package issue",
+          "detail": "T-12 operating statement missing."
+        },
+        {
+          "code": "package_issue",
+          "kind": "package",
+          "result": "flag",
+          "label": "Package issue",
+          "detail": "Appraisal not received; LTV cannot be computed."
+        },
+        {
+          "code": "package_issue",
+          "kind": "package",
+          "result": "flag",
+          "label": "Package issue",
+          "detail": "Rent roll is stale."
+        },
+        {
+          "code": "package_issue",
+          "kind": "package",
+          "result": "flag",
+          "label": "Package issue",
+          "detail": "Stated 96% occupancy contradicts the rent roll (141 of 180 paying)."
+        }
+      ],
+      "extraction": {
+        "deal_id": "DEAL-003",
+        "property_name": {
+          "value": "Birchwood Commons",
+          "quote": "Property: Birchwood Commons",
+          "status": "stated"
+        },
+        "msa": {
+          "value": "Phoenix",
+          "quote": "Phoenix, AZ 85021 (Phoenix MSA)",
+          "status": "stated"
+        },
+        "deal_purpose": {
+          "value": "refinance",
+          "quote": "seeks an agency refinance",
+          "status": "stated"
+        },
+        "property_type": {
+          "value": "multifamily",
+          "quote": "Mid-rise multifamily, 180 units, built 2014, stabilized",
+          "status": "stated"
+        },
+        "units": {
+          "value": 180,
+          "quote": "Mid-rise multifamily, 180 units",
+          "status": "stated"
+        },
+        "stabilized": {
+          "value": true,
+          "quote": "Sponsor reports the property is \"fully stabilized at 96% occupancy\"",
+          "status": "stated",
+          "note": "Sponsor claim; contradicted by rent roll."
+        },
+        "value_add_or_construction": {
+          "value": "possible",
+          "quote": "Occupied but listed \"down — renovation, no rent\": 20 units",
+          "status": "stated",
+          "note": "Active renovation with 20 units offline may indicate value-add."
+        },
+        "loan_amount": {
+          "value": 28500000,
+          "quote": "Requested loan: $28,500,000",
+          "status": "stated"
+        },
+        "appraised_value": {
+          "value": null,
+          "status": "not_stated",
+          "note": "Appraisal: ordered, not yet received."
+        },
+        "gross_potential_rent": {
+          "value": 4300000,
+          "quote": "Gross potential rent (sponsor estimate): $4,300,000",
+          "status": "estimate"
+        },
+        "effective_gross_income": {
+          "value": null,
+          "status": "not_stated",
+          "note": "No T-12."
+        },
+        "noi": {
+          "value": null,
+          "status": "not_stated",
+          "note": "No T-12; only sponsor estimates of GPR and opex. NOI not derived from estimates."
+        },
+        "annual_debt_service": {
+          "value": null,
+          "status": "not_stated",
+          "note": "DSCR: not stated; no debt service given."
+        },
+        "rent_roll_total_units": {
+          "value": 180,
+          "quote": "180 units listed",
+          "status": "stated"
+        },
+        "rent_roll_occupied_units": {
+          "value": 141,
+          "quote": "Occupied and paying: 141 units",
+          "status": "stated",
+          "note": "Plus 20 'occupied' units down for renovation paying no rent."
+        },
+        "avg_in_place_rent_monthly": {
+          "value": 1640,
+          "quote": "Average in-place rent on paying units: $1,640/unit/month",
+          "status": "stated"
+        },
+        "occupancy_sustained_90d": {
+          "value": null,
+          "status": "not_stated",
+          "note": "No occupancy history; rent roll is 8 months old."
+        },
+        "sponsor_net_worth": {
+          "value": 36000000,
+          "quote": "Net worth: $36,000,000",
+          "status": "stated"
+        },
+        "sponsor_liquidity": {
+          "value": 3200000,
+          "quote": "Liquidity: $3,200,000",
+          "status": "stated"
+        },
+        "stated_claims": {
+          "ltv_pct": {
+            "value": 70,
+            "quote": "Requested LTV: \"approximately 70%, pending appraisal\"",
+            "status": "estimate"
+          },
+          "occupancy_pct": {
+            "value": 96,
+            "quote": "Sponsor-stated occupancy: 96%",
+            "status": "stated"
+          }
+        },
+        "data_quality": [
+          {
+            "issue": "T-12 operating statement missing.",
+            "quote": "A trailing 12-month operating statement was not included in the package."
+          },
+          {
+            "issue": "Appraisal not received; LTV cannot be computed.",
+            "quote": "Appraisal: ordered, not yet received"
+          },
+          {
+            "issue": "Rent roll is stale.",
+            "quote": "Rent roll snapshot (as provided, dated 8 months ago)"
+          },
+          {
+            "issue": "Stated 96% occupancy contradicts the rent roll (141 of 180 paying).",
+            "quote": "Occupied and paying: 141 units"
+          }
+        ],
+        "for_human": [
+          {
+            "note": "Sponsor had an asset in forbearance in 2021 (resolved). Not a box criterion; for underwriter awareness.",
+            "quote": "one was in forbearance during 2021, since resolved"
+          }
+        ]
+      }
+    },
+    {
+      "deal_id": "DEAL-002",
+      "status": "Decline",
+      "status_label": "Decline (recommended, human confirms)",
+      "open_items": 5,
+      "cushion": 0.018518518518518413,
+      "fixed_outcome": "fail",
+      "unreliable_metrics": [],
+      "metrics": {
+        "ltv_pct": {
+          "value": 66.12903225806451,
+          "formula": "loan ÷ appraised value",
+          "inputs": [
+            "loan_amount",
+            "appraised_value"
+          ]
+        },
+        "dscr": {
+          "value": null,
+          "formula": "NOI ÷ annual debt service",
+          "inputs": [
+            "noi",
+            "annual_debt_service"
+          ]
+        },
+        "occupancy_pct": {
+          "value": 91.66666666666666,
+          "formula": "occupied units ÷ total units (rent roll)",
+          "inputs": [
+            "rent_roll_occupied_units",
+            "rent_roll_total_units"
+          ]
+        },
+        "nw_to_loan": {
+          "value": 1.8048780487804879,
+          "formula": "sponsor net worth ÷ loan",
+          "inputs": [
+            "sponsor_net_worth",
+            "loan_amount"
+          ]
+        },
+        "liquidity_months": {
+          "value": null,
+          "formula": "sponsor liquidity ÷ (annual debt service ÷ 12)",
+          "inputs": [
+            "sponsor_liquidity",
+            "annual_debt_service"
+          ]
+        },
+        "rent_roll_annual": {
+          "value": 554400,
+          "formula": "occupied units × avg in-place rent × 12",
+          "inputs": [
+            "rent_roll_occupied_units",
+            "avg_in_place_rent_monthly"
+          ]
+        },
+        "egi": {
+          "value": 12100000,
+          "formula": "stated",
+          "inputs": [
+            "effective_gross_income"
+          ]
+        }
+      },
+      "findings": [
+        {
+          "code": "excluded_property_type",
+          "kind": "hard",
+          "result": "fail",
+          "label": "Property type",
+          "detail": "Classified as hotel, which the box excludes."
+        },
+        {
+          "code": "market_unverified",
+          "kind": "hard",
+          "result": "unknown",
+          "label": "Market",
+          "detail": "'Charleston' is not on the reference list. It needs checking against the full top-75 list, not an automatic decline."
+        },
+        {
+          "code": "ltv_ok",
+          "kind": "graduated",
+          "result": "pass",
+          "label": "LTV",
+          "detail": "66.1% vs box ≤ 80.0%"
+        },
+        {
+          "code": "missing_debt_service",
+          "kind": "graduated",
+          "result": "unknown",
+          "label": "DSCR",
+          "detail": "Can't compute (NOI ÷ annual debt service): an input isn't in the package."
+        },
+        {
+          "code": "occupancy_ok",
+          "kind": "graduated",
+          "result": "pass",
+          "label": "Physical occupancy",
+          "detail": "91.7% vs box ≥ 90.0%"
+        },
+        {
+          "code": "nw_ok",
+          "kind": "graduated",
+          "result": "pass",
+          "label": "Sponsor net worth ÷ loan",
+          "detail": "1.80x vs box ≥ 1.00x"
+        },
+        {
+          "code": "missing_debt_service",
+          "kind": "graduated",
+          "result": "unknown",
+          "label": "Sponsor liquidity",
+          "detail": "Can't compute (sponsor liquidity ÷ (annual debt service ÷ 12)): an input isn't in the package."
+        },
+        {
+          "code": "package_issue",
+          "kind": "package",
+          "result": "flag",
+          "label": "Package issue",
+          "detail": "Sponsor's framing conflicts with the asset: income is hotel rooms and F&B, not residential rent."
+        }
+      ],
+      "extraction": {
+        "deal_id": "DEAL-002",
+        "property_name": {
+          "value": "The Harborview",
+          "quote": "Property: The Harborview",
+          "status": "stated"
+        },
+        "msa": {
+          "value": "Charleston",
+          "quote": "Charleston, SC 29401 (Charleston MSA)",
+          "status": "stated"
+        },
+        "deal_purpose": {
+          "value": null,
+          "status": "not_stated",
+          "note": "Refinance vs acquisition not stated."
+        },
+        "property_type": {
+          "value": "hotel",
+          "quote": "140-key boutique hotel with 12 extended-stay residential units, built 2016",
+          "status": "stated"
+        },
+        "units": {
+          "value": 12,
+          "quote": "12 extended-stay units, 11 occupied on monthly terms",
+          "status": "stated"
+        },
+        "stabilized": {
+          "value": null,
+          "status": "not_stated",
+          "note": "Operating hotel; multifamily stabilization not applicable."
+        },
+        "value_add_or_construction": {
+          "value": "no",
+          "quote": "Recently renovated waterfront property operating as a boutique hotel",
+          "status": "stated"
+        },
+        "loan_amount": {
+          "value": 41000000,
+          "quote": "Requested loan: $41,000,000",
+          "status": "stated"
+        },
+        "appraised_value": {
+          "value": 62000000,
+          "quote": "Appraisal (going-concern): $62,000,000",
+          "status": "stated"
+        },
+        "gross_potential_rent": {
+          "value": null,
+          "status": "not_stated",
+          "note": "Hotel revenue reported as rooms + F&B instead."
+        },
+        "effective_gross_income": {
+          "value": 12100000,
+          "quote": "Total revenue: $12,100,000",
+          "status": "stated"
+        },
+        "noi": {
+          "value": 4200000,
+          "quote": "Net operating income (NOI): $4,200,000",
+          "status": "stated"
+        },
+        "annual_debt_service": {
+          "value": null,
+          "status": "not_stated",
+          "note": "Only an 'implied DSCR ~1.45x' is given; debt service amount not stated."
+        },
+        "rent_roll_total_units": {
+          "value": 12,
+          "quote": "12 extended-stay units, 11 occupied on monthly terms",
+          "status": "stated"
+        },
+        "rent_roll_occupied_units": {
+          "value": 11,
+          "quote": "12 extended-stay units, 11 occupied on monthly terms",
+          "status": "stated"
+        },
+        "avg_in_place_rent_monthly": {
+          "value": 4200,
+          "quote": "Average monthly rate: $4,200/unit",
+          "status": "stated"
+        },
+        "occupancy_sustained_90d": {
+          "value": null,
+          "status": "not_stated",
+          "note": "Only hotel room occupancy (78%) given."
+        },
+        "sponsor_net_worth": {
+          "value": 74000000,
+          "quote": "Net worth: $74,000,000",
+          "status": "stated"
+        },
+        "sponsor_liquidity": {
+          "value": 9500000,
+          "quote": "Liquidity: $9,500,000",
+          "status": "stated"
+        },
+        "stated_claims": {
+          "ltv_pct": {
+            "value": 66,
+            "quote": "Requested LTV: 66%",
+            "status": "stated"
+          },
+          "dscr": {
+            "value": 1.45,
+            "quote": "Implied DSCR at quoted terms: ~1.45x",
+            "status": "stated"
+          }
+        },
+        "data_quality": [
+          {
+            "issue": "Sponsor's framing conflicts with the asset: income is hotel rooms and F&B, not residential rent.",
+            "quote": "Sponsor describes it as a \"mixed-use multifamily-adjacent hospitality asset\""
+          }
+        ],
+        "for_human": [
+          {
+            "note": "Sponsor is a hospitality operator. Possibly a fit for a different W&D lending product; worth routing to the producer instead of dropping silently.",
+            "quote": "Hospitality operator with 6 flagged and independent hotels"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "deal_id": "DEAL-001",
+  "property_name": {"value": "Maple Run Apartments", "quote": "Property: Maple Run Apartments", "status": "stated"},
+  "msa": {"value": "Columbus", "quote": "Columbus, OH 43215 (Columbus MSA)", "status": "stated"},
+  "deal_purpose": {"value": "refinance", "quote": "Sponsor is refinancing existing bank debt and seeking agency take-out.", "status": "stated"},
+  "property_type": {"value": "multifamily", "quote": "Garden-style multifamily, 248 units, built 2009, stabilized", "status": "stated"},
+  "units": {"value": 248, "quote": "Garden-style multifamily, 248 units", "status": "stated"},
+  "stabilized": {"value": true, "quote": "Garden-style multifamily, 248 units, built 2009, stabilized", "status": "stated"},
+  "value_add_or_construction": {"value": "no", "quote": "Stabilized garden apartment community", "status": "stated"},
+  "loan_amount": {"value": 32000000, "quote": "Requested loan: $32,000,000", "status": "stated"},
+  "appraised_value": {"value": 45000000, "quote": "Third-party appraisal: $45,000,000", "status": "stated"},
+  "gross_potential_rent": {"value": 5520000, "quote": "Gross potential rent: $5,520,000", "status": "stated"},
+  "effective_gross_income": {"value": 5310000, "quote": "Effective gross income: $5,310,000", "status": "stated"},
+  "noi": {"value": 3130000, "quote": "Net operating income (NOI): $3,130,000", "status": "stated"},
+  "annual_debt_service": {"value": 2268000, "quote": "Annual debt service at quoted terms: $2,268,000", "status": "stated"},
+  "rent_roll_total_units": {"value": 248, "quote": "248 units, 232 occupied (93.5% physical)", "status": "stated"},
+  "rent_roll_occupied_units": {"value": 232, "quote": "248 units, 232 occupied (93.5% physical)", "status": "stated"},
+  "avg_in_place_rent_monthly": {"value": 1855, "quote": "Average in-place rent: $1,855/unit/month", "status": "stated"},
+  "occupancy_sustained_90d": {"value": true, "quote": "Property has run 93–95% occupancy for the trailing two years.", "status": "stated"},
+  "sponsor_net_worth": {"value": 58000000, "quote": "Net worth: $58,000,000", "status": "stated"},
+  "sponsor_liquidity": {"value": 4100000, "quote": "Liquidity: $4,100,000 (≈ 21 months P&I)", "status": "stated"},
+  "stated_claims": {
+    "ltv_pct": {"value": 71, "quote": "Requested LTV: 71%", "status": "stated"},
+    "dscr": {"value": 1.38, "quote": "Implied DSCR at quoted terms: ~1.38x", "status": "stated"},
+    "occupancy_pct": {"value": 93.5, "quote": "248 units, 232 occupied (93.5% physical)", "status": "stated"},
+    "liquidity_months": {"value": 21, "quote": "Liquidity: $4,100,000 (≈ 21 months P&I)", "status": "stated"}
+  },
+  "data_quality": [],
+  "for_human": []
+}
