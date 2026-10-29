@@ -1,0 +1,50 @@
+# Screening Box — First-Pass Agency Multifamily
+# OWNER: Credit / Underwriting. Not the PM's or the tool's to change.
+# The tool only reads this file. Every threshold below is shown, read-only, in the queue.
+# Source: lending-box.md (illustrative criteria for the exercise, not W&D policy).
+
+version: "1.0-illustrative"
+owner: "Credit / Underwriting"
+effective: "2026-10-27"
+
+# ---- HARD criteria: a clear miss = Decline (recommended; a human confirms) ----
+hard:
+  asset_type: multifamily
+  min_units: 5
+  must_be_stabilized: true            # not ground-up construction, not value-add gut rehab
+  excluded_property_types: [hotel, student_heavy, senior_assisted, raw_land, single_family]
+  student_max_pct: 50                 # student-heavy = >50% of units
+  loan_min: 5000000
+  loan_max: 75000000                  # ASSUMPTION: box doesn't say loan size is hard or graduated; treated as hard
+  # Top-75 MSA. ASSUMPTION: this is an illustrative subset only. Production should use the
+  # Census CBSA ranking, maintained by Credit/Data. A market NOT on the list is "unverified"
+  # (Needs review), never an automatic Decline.
+  top75_msa_reference:
+    - Columbus
+    - Phoenix
+    - Austin
+    - Nashville
+    - Atlanta
+    - Dallas
+    - Houston
+    - Charlotte
+    - Denver
+    - Tampa
+
+# ---- GRADUATED criteria: pass / near the line (Needs review) / clearly outside (Decline) ----
+# The box says "close to the line" goes to a human but doesn't define "close".
+# ASSUMPTION — PENDING CREDIT: the review_band values below. This is the #1 question for Credit.
+graduated:
+  ltv_max_pct:            {limit: 80.0, review_band: 82.5}   # LTV = loan / appraised value
+  dscr_min:               {limit: 1.25, review_band: 1.15}   # DSCR = NOI / annual debt service
+  occupancy_min_pct:      {limit: 90.0, review_band: 87.0}   # physical, sustained 90+ days
+  sponsor_nw_to_loan_min: {limit: 1.00, review_band: 0.75}   # net worth / loan
+  liquidity_months_min:   {limit: 9.0,  review_band: 6.0}    # liquidity / monthly P&I
+
+# ---- Data-integrity checks (components win over summaries; gaps get flagged) ----
+# ASSUMPTION — PENDING CREDIT: tolerances.
+integrity:
+  stated_vs_computed_ltv_tolerance_pts: 1.0
+  stated_vs_computed_dscr_tolerance: 0.03
+  rent_roll_vs_egi_tolerance_pct: 10.0     # occupied units x avg rent x 12 vs. EGI
+  occupancy_conflict_tolerance_pts: 3.0    # summary vs. rent roll

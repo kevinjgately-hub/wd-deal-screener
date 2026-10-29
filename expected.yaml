@@ -1,0 +1,31 @@
+# DEFINITION OF "WORKING" — written BEFORE the prototype was run.
+# Expected calls come from hand-calculating each deal against the box (see notes).
+#
+# Pass bar:
+#   1. All 5 screening calls match.
+#   2. Every required flag is raised.
+#   3. Zero unsupported numbers: every extracted figure carries a verbatim quote that
+#      exists in the source package, or is explicitly "not_stated".
+#   4. No deal is ever auto-declined: every Decline is labeled "recommended" for human confirmation.
+
+deals:
+  DEAL-001:
+    expected: Advance
+    note: "LTV 71.1%, DSCR 1.38x, 93.5% physical sustained 2 yrs, NW 1.8x loan, ~21.7 mo liquidity. Control case."
+    required_flags: []
+  DEAL-002:
+    expected: Decline
+    note: "Boutique hotel. Hard exclusion regardless of the 'multifamily-adjacent' framing or strong metrics."
+    required_flags: [excluded_property_type]
+  DEAL-003:
+    expected: Needs review
+    note: "No T-12, no appraisal, no debt service -> LTV/DSCR not computable. Stated 96% vs rent roll 78% paying. Stale rent roll. Renovation program -> possible value-add."
+    required_flags: [occupancy_conflict, missing_noi, missing_appraisal]
+  DEAL-004:
+    expected: Needs review
+    note: "LTV 81.0% (limit 80) and liquidity ~6.9 mo (min 9): both graduated, both inside review band."
+    required_flags: [ltv_near_line, liquidity_near_line]
+  DEAL-005:
+    expected: Needs review
+    note: "Broker says ~75% / ~1.30x. Components say 82.0% / 1.18x. Rent roll explains ~$4.38M of $5.14M EGI. Inside review bands under the ASSUMED bands; would flip to Decline if Credit sets tighter bands."
+    required_flags: [broker_ltv_mismatch, broker_dscr_mismatch, income_reconciliation_gap]
