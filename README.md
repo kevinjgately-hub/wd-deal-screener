@@ -25,11 +25,11 @@ box.yaml (Credit-owned) ---------------------------------> screen.py (determinis
 ## The queue (`out/queue.html`)
 
 - **Credit's box:** shown read-only and versioned. Only this sets each deal's status.
-- **Your view:** filters for loan size, market, deal purpose, status and number of open items, plus a choice of ranking.
+- **Your view:** filters for received date, loan size, market, deal purpose, status and number of open items. Sort by open items, oldest or newest received, room inside the box, or loan size, with or without grouping by status. Each card shows how long the deal has been waiting.
 - **My bar:** each user can set their own threshold on any metric. Deals that miss it are marked and moved down, or hidden if the user prefers. Their status doesn't change.
 - **What-if:** a sandbox showing which deals would change if Credit moved a limit. It never changes the official status.
 - **Never silently hidden:** a banner names every deal the current view hides.
-- **Decision log:** records each person's decision along with the view settings they were using.
+- **Decision log:** records who decided what and when, along with the view settings they were using. Declines and overrides need a written reason. On the published page, decisions are saved with the page and reopening a deal keeps the history.
 - **Add a deal:** on the published page, drop in a new package (.md or .txt). It goes through four steps:
   1. Claude extracts it using the same rules as `SKILL.md`.
   2. The page checks every quote against the package and throws out any figure it can't find.
@@ -75,6 +75,7 @@ Open `out/queue.html` in a browser. To re-extract the deals, follow `SKILL.md` w
 | `test_engine.js` | Confirms `engine.js` and `screen.py` agree, and that a made-up number is thrown out |
 | `samples/` | A new deal (messy broker email) for trying "Add a deal" |
 | `deals/` | The five sample packages |
+| `deals/intake.yaml` | Received dates. These are illustrative; in production they'd come from the intake system |
 | `extractions/` | Claude's structured extractions with source quotes |
 | `out/` | Latest run output |
 | `RESULTS.md` | Honest report of what worked and what didn't |

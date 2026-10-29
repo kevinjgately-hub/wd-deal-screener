@@ -237,6 +237,11 @@ def main():
     if not exts:
         sys.exit("No extractions found in extractions/. Run the extraction step first.")
     res = [screen(e, box) for e in exts]
+    # Received dates come from intake (Ops), not the package. Missing file or entry -> no date.
+    intake_path = ROOT / "deals" / "intake.yaml"
+    intake = yaml.safe_load(intake_path.read_text()) if intake_path.exists() else {}
+    for r in res:
+        r["received"] = str((intake or {}).get(r["deal_id"], {}).get("received") or "") or None
     res.sort(key=lambda r: (STATUS_ORDER[r["status"]], r["open_items"], -(r["cushion"] or -9)))
     skill = (ROOT / "SKILL.md").read_text()
     run = {

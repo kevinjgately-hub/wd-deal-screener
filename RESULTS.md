@@ -28,6 +28,19 @@
 - I planted a fake debt service on 003. The quote check rejected it: the quote isn't in the package.
 - Credit tightens the DSCR review band from 1.15x to 1.20x. 005 flips to Decline (recommended), and no other deal changes. This is the live-change demo.
 
+## First live run of "Add a deal" (real Claude, new deal)
+
+The test deal was `samples/deal-006-broker-email.md`, a broker teaser email in a format unlike the five packages.
+
+- **Extraction:** all 19 figures were correct, and every quote matched the email word for word. That includes abbreviated figures like "$21.5M" and "~$1.55M/yr". Nothing was thrown out.
+- **Screening:** on the figures alone, the deal is **Advance**. It came back **Needs review** because Claude attached four package notes, any one of which sends a deal to a person:
+  - it's a teaser, with the full package to follow
+  - the debt service is approximate
+  - the appraisal date is earlier than the end of the T-12
+  - gross potential rent isn't given
+- **Bug found and fixed:** Claude returned `deal_id` in the same `{value, quote}` form as the other fields. The page now accepts either form.
+- **The question this raises for Credit:** should every package note send a deal to review, or only material ones? "Teaser, full package to follow" is arguably material. "Gross potential rent not given" isn't. The model can only ever escalate, never advance or decline, so this is a tuning question rather than a safety one.
+
 ## What I'd conclude, and the limits
 
 - The split holds up. The model extracts with evidence, code does the math and applies the box, and humans make the calls. Most of the value is in catching what the broker summary hides (005) and refusing to invent numbers (003).
