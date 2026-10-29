@@ -1,5 +1,5 @@
 {
-  "run_at": "2026-10-28 23:48",
+  "run_at": "2026-10-29 11:18",
   "box": {
     "version": "1.0-illustrative",
     "owner": "Credit / Underwriting",
@@ -291,7 +291,8 @@
         },
         "data_quality": [],
         "for_human": []
-      }
+      },
+      "received": "2026-10-26"
     },
     {
       "deal_id": "DEAL-004",
@@ -529,7 +530,8 @@
             "quote": "most net worth is tied up in real estate equity"
           }
         ]
-      }
+      },
+      "received": "2026-10-23"
     },
     {
       "deal_id": "DEAL-005",
@@ -801,7 +803,8 @@
           }
         ],
         "for_human": []
-      }
+      },
+      "received": "2026-10-27"
     },
     {
       "deal_id": "DEAL-003",
@@ -1099,7 +1102,8 @@
             "quote": "one was in forbearance during 2021, since resolved"
           }
         ]
-      }
+      },
+      "received": "2026-10-08"
     },
     {
       "deal_id": "DEAL-002",
@@ -1345,7 +1349,8 @@
             "quote": "Hospitality operator with 6 flagged and independent hotels"
           }
         ]
-      }
+      },
+      "received": "2026-10-19"
     }
   ],
   "extraction_rules": "## Extraction rules (non-negotiable)\n\n- **Every number needs a verbatim quote** from the package that contains that number. Copy the text\n  exactly. You may leave out markdown `**` bold markers. If there's no quote, there's no number.\n- **Missing means missing.** If a figure isn't in the package, use\n  `{\"value\": null, \"status\": \"not_stated\", \"note\": \"<what the package says instead>\"}`.\n  Never back into a number. For example, don't derive debt service from an \"implied DSCR\",\n  NOI from a sponsor's GPR estimate, or value from a \"pending appraisal\" LTV.\n- **Don't calculate LTV, DSCR, physical occupancy %, or liquidity months.** Extract the components.\n  `screen.py` does the math. Record the package's own claims under `stated_claims` so they can be checked.\n- **Classify property type by what the asset is, not how it's marketed.** A hotel described as\n  \"multifamily-adjacent\" is a `hotel`.\n- **Record problems you notice** under `data_quality`, such as a stale rent roll, a missing T-12, documents\n  \"to follow,\" or summary claims that the exhibits contradict. Record things a human should know that aren't\n  in the box (such as a past forbearance) under `for_human`. These are not grounds to decline.\n- Use an estimate only if it's labeled as one. Set `\"status\": \"estimate\"` and keep the quote.\n\n## Schema\n\nEach field is `{\"value\": ..., \"quote\": \"...\", \"status\": \"stated\"}` unless noted.\n\n```json\n{\n  \"deal_id\": \"DEAL-00X\",\n  \"property_name\": \"\", \"msa\": \"\",\n  \"deal_purpose\": \"refinance | acquisition | not_stated\",\n  \"property_type\": \"multifamily | hotel | student_heavy | senior_assisted | raw_land | single_family | other\",\n  \"units\": 0, \"stabilized\": true,\n  \"value_add_or_construction\": \"no | possible | yes\",\n  \"loan_amount\": 0, \"appraised_value\": 0,\n  \"gross_potential_rent\": 0, \"effective_gross_income\": 0, \"noi\": 0, \"annual_debt_service\": 0,\n  \"rent_roll_total_units\": 0, \"rent_roll_occupied_units\": 0, \"avg_in_place_rent_monthly\": 0,\n  \"occupancy_sustained_90d\": true,\n  \"sponsor_net_worth\": 0, \"sponsor_liquidity\": 0,\n  \"stated_claims\": {\"ltv_pct\": 0, \"dscr\": 0, \"occupancy_pct\": 0, \"liquidity_months\": 0},\n  \"data_quality\": [{\"issue\": \"\", \"quote\": \"\"}],\n  \"for_human\": [{\"note\": \"\", \"quote\": \"\"}]\n}\n```\n\n`stated_claims` entries use the same `{value, quote}` form. Leave out any claim the package doesn't make.\n"
