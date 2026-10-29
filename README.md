@@ -30,6 +30,13 @@ box.yaml (Credit-owned) ---------------------------------> screen.py (determinis
 - **What-if:** a sandbox showing which deals would change if Credit moved a limit. It never changes the official status.
 - **Never silently hidden:** a banner names every deal the current view hides.
 - **Decision log:** records each person's decision along with the view settings they were using.
+- **Add a deal:** on the published page, drop in a new package (.md or .txt). It goes through four steps:
+  1. Claude extracts it using the same rules as `SKILL.md`.
+  2. The page checks every quote against the package and throws out any figure it can't find.
+  3. `engine.js` applies Credit's box with the same rules as `screen.py`. `test_engine.js` checks that the two agree on every deal.
+  4. The deal joins the queue, labeled "Added here · not in official run", and is saved so it's still there after a reload.
+
+  To make it official, add the package to `deals/` and run the normal Claude extraction and `screen.py`. `samples/deal-006-broker-email.md` is a messy broker email to try it with.
 
 ## Run it
 
@@ -37,6 +44,7 @@ box.yaml (Credit-owned) ---------------------------------> screen.py (determinis
 pip install pyyaml
 python3 screen.py      # applies the box to extractions/, writes out/queue.html
 python3 evaluate.py    # checks results against expected.yaml
+node test_engine.js    # checks the page's engine.js matches screen.py
 ```
 
 Open `out/queue.html` in a browser. To re-extract the deals, follow `SKILL.md` with Claude.
@@ -63,6 +71,9 @@ Open `out/queue.html` in a browser. To re-extract the deals, follow `SKILL.md` w
 | `queue_template.html` | Front end for the queue |
 | `expected.yaml` | Expected results, written before the first run |
 | `evaluate.py` | Pass/fail check, including verification that quotes match the source |
+| `engine.js` | The same screening rules for the page's "Add a deal", plus the quote check |
+| `test_engine.js` | Confirms `engine.js` and `screen.py` agree, and that a made-up number is thrown out |
+| `samples/` | A new deal (messy broker email) for trying "Add a deal" |
 | `deals/` | The five sample packages |
 | `extractions/` | Claude's structured extractions with source quotes |
 | `out/` | Latest run output |

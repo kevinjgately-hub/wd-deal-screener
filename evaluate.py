@@ -14,14 +14,24 @@ ROOT = pathlib.Path(__file__).parent
 norm = lambda s: re.sub(r"\s+", " ", s.replace("**", "")).strip()
 
 
-def digits_in(n):
-    """Forms a number might take in text: 32000000 -> '32,000,000'; 1.3 -> '1.30' or '1.3'."""
-    if isinstance(n, bool):
-        return []
-    if isinstance(n, int) or float(n).is_integer():
-        i = int(n)
-        return [f"{i:,}", str(i)]
-    return [f"{n}", f"{n:.2f}", f"{n:.1f}"]
+SCALE = {"k": 1e3, "thousand": 1e3, "m": 1e6, "mm": 1e6, "mn": 1e6, "million": 1e6, "b": 1e9, "bn": 1e9, "billion": 1e9}
+NUM = re.compile(r"(\d[\d,]*(?:\.\d+)?)\s*(thousand|million|billion|mm|mn|bn|k|m|b)?(?![a-wyz])", re.I)
+
+
+def numbers_in(q):
+    """Every number written in a quote, including '$21.5M', '1.92 million', '4,200', '81%', '1.38x'.
+    Same rule as engine.js, so the page and the official check agree."""
+    out = []
+    for mt in NUM.finditer(q):
+        n = float(mt.group(1).replace(",", ""))
+        out.append(n)
+        if mt.group(2):
+            out.append(n * SCALE[mt.group(2).lower()])
+    return out
+
+
+def number_in_quote(val, q):
+    return any(abs(n - val) <= max(1e-9, abs(val) * 1e-6) for n in numbers_in(q))
 
 
 def check_quotes(ext, src):
@@ -45,7 +55,7 @@ def check_quotes(ext, src):
             problems.append(f"{k}: quote not found verbatim in package: {q!r}")
         val = f.get("value")
         if isinstance(val, (int, float)) and not isinstance(val, bool):
-            if not any(d in norm(q) for d in digits_in(val)):
+            if not number_in_quote(val, norm(q)):
                 problems.append(f"{k}: number {val} does not appear in its quote")
     return checked, problems
 

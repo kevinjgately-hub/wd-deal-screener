@@ -81,6 +81,21 @@ table.box td.num { white-space: nowrap; }
 .m.mine-miss { box-shadow: inset 0 0 0 1.5px var(--accent); }
 .m .mine { font-size: 11px; color: var(--accent); font-weight: 600; }
 .deal.below { opacity: .78; }
+.add { border-style: dashed; }
+.add.dragging { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.add-row { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: flex-start; }
+.drop { position: relative; border: 1.5px dashed var(--line); border-radius: 6px; padding: 7px 14px; cursor: pointer; background: var(--bg); font-size: 13px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.drop input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+.drop:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+#add-paste-wrap { flex: 1 1 260px; min-width: 0; padding-top: 7px; }
+#add-paste { width: 100%; margin-top: 6px; font-family: var(--f-mono); font-size: 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 8px; }
+.add-status { font-size: 13px; color: var(--muted); }
+.add-status.err { color: var(--dec); }
+.add-status.ok { color: var(--adv); font-weight: 600; }
+.added-tag { font-size: 11.5px; font-weight: 600; border: 1px dashed var(--accent); color: var(--accent); border-radius: 999px; padding: 1px 9px; white-space: nowrap; }
+.deal.added { border-top-style: dashed; border-right-style: dashed; border-bottom-style: dashed; }
+.disc { color: var(--dec); font-weight: 600; }
+s.gave { color: var(--muted); }
 .sandbox.on { border-color: var(--rev); box-shadow: inset 0 0 0 1px var(--rev); }
 .switch { display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; }
 .slider { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; font-size: 12.5px; }
@@ -191,6 +206,15 @@ details summary { cursor: pointer; color: var(--accent); font-size: 13px; }
     </aside>
 
     <main class="queue" id="queue-wrap">
+      <section class="panel add" id="add-panel" aria-labelledby="h-add">
+        <div class="panel-head"><h2 id="h-add">Add a deal</h2><span class="owner">Screened here, not in the official run</span></div>
+        <p class="note">Drop in a deal package (.md or .txt) or paste it. Claude pulls out each figure with the line it came from. The page then checks every line against the package, throws out any figure it can't find, and applies Credit's box.</p>
+        <div class="add-row">
+          <label class="drop" for="add-file"><input type="file" id="add-file" accept=".md,.markdown,.txt,text/markdown,text/plain"><span id="add-file-label">Choose a file</span></label>
+          <details id="add-paste-wrap"><summary>Or paste the package</summary><textarea id="add-paste" rows="8" placeholder="Paste the deal package here"></textarea></details>
+        </div>
+        <div class="actions"><button type="button" class="primary" id="add-go">Screen this deal</button><button type="button" id="add-stop" hidden>Stop</button><span id="add-status" class="add-status" role="status"></span></div>
+      </section>
       <div class="hidden-bar" id="hidden-bar" hidden></div>
       <div class="queue" id="queue"></div>
       <section class="panel log" aria-labelledby="h-log">
@@ -202,12 +226,15 @@ details summary { cursor: pointer; color: var(--accent); font-size: 13px; }
   </div>
 </div>
 
+<script>/*__ENGINE__*/</script>
 <script>
 const DATA = /*__DATA__*/null;
-const box = DATA.box, deals = DATA.deals;
+const box = DATA.box, deals = DATA.deals;   // deals = the official run (screen.py)
+let ADDED = [];                              // deals added on this page, screened by engine.js
+const all = () => deals.concat(ADDED);
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const val = (e, k) => { const x = (e[k] && typeof e[k] === "object") ? e[k].value : e[k]; return k === "deal_purpose" ? (x ?? "not_stated") : x; };
+const val = (e, k) => { const x = (e[k] && typeof e[k] === "object") ? e[k].value : e[k]; return k === "deal_purpose" ? (x ?? "not_stated") : k === "msa" ? (x ?? "Not stated") : x; };
 const money = x => x == null ? "n/a" : "$" + (x / 1e6).toFixed(x >= 1e8 ? 0 : 1) + "M";
 const sKey = s => s.split(" ")[0];
 
@@ -221,8 +248,14 @@ const GRAD = [
 const fmt = (x, u) => x == null ? "n/a" : u === "%" ? x.toFixed(1) + "%" : u === "x" ? x.toFixed(2) + "x" : x.toFixed(1) + u;
 const grade = (x, dir, lim, band) => x == null ? "unknown" : dir === "max" ? (x <= lim ? "pass" : x <= band ? "near" : "fail") : (x >= lim ? "pass" : x >= band ? "near" : "fail");
 
-const MSAS = [...new Set(deals.map(d => val(d.extraction, "msa")))].sort();
-const PURPOSES = [...new Set(deals.map(d => val(d.extraction, "deal_purpose")))];
+let MSAS = [], PURPOSES = [];
+// Filter chips come from the deals on the page. A newly added deal's market or purpose starts switched on.
+function refreshFacets(addToView) {
+  const m = [...new Set(all().map(d => val(d.extraction, "msa")))].sort(), p = [...new Set(all().map(d => val(d.extraction, "deal_purpose")))];
+  if (addToView) { m.filter(x => !MSAS.includes(x)).forEach(x => F.msas.add(x)); p.filter(x => !PURPOSES.includes(x)).forEach(x => F.purposes.add(x)); }
+  MSAS = m; PURPOSES = p;
+}
+refreshFacets(false);
 const STATUSES = ["Advance", "Needs review", "Decline"];
 const BAR_DEFAULT = () => Object.fromEntries(GRAD.map(g => [g.key, { on: false, value: box.graduated[g.key].limit }]));
 const DEFAULTS = () => ({ min: 0, max: 100, msas: new Set(MSAS), purposes: new Set(PURPOSES), statuses: new Set(STATUSES), maxOpen: 99, sort: "open",
@@ -257,8 +290,8 @@ function sandboxStatus(d) {
 }
 
 function visible(d) {
-  const e = d.extraction, loan = val(e, "loan_amount") / 1e6;
-  if (!(loan >= F.min && loan <= F.max)) return false;
+  const e = d.extraction, loanRaw = val(e, "loan_amount");
+  if (loanRaw != null && !(loanRaw / 1e6 >= F.min && loanRaw / 1e6 <= F.max)) return false;
   if (!F.msas.has(val(e, "msa")) || !F.purposes.has(val(e, "deal_purpose")) || !F.statuses.has(d.status)) return false;
   if (d.status === "Needs review" && d.open_items > F.maxOpen) return false;
   const bc = barCheck(d);
@@ -269,7 +302,7 @@ function visible(d) {
 
 function sorted(list) {
   const order = { "Advance": 0, "Needs review": 1, "Decline": 2 };
-  const k = { open: d => d.open_items, cushion: d => -(d.cushion ?? -9), loan: d => -val(d.extraction, "loan_amount") }[F.sort];
+  const k = { open: d => d.open_items, cushion: d => -(d.cushion ?? -9), loan: d => -(val(d.extraction, "loan_amount") ?? 0) }[F.sort];
   return [...list].sort((a, b) => order[a.status] - order[b.status] || barMisses(a) - barMisses(b) || k(a) - k(b));
 }
 
@@ -315,9 +348,10 @@ function dealCard(d, rank) {
   const wi = SB.on ? sandboxStatus(d) : null;
   const wiChip = wi && wi !== d.status ? `<span class="whatif">What-if: ${esc(wi)}</span>` : "";
   const skip = new Set(["deal_id", "stated_claims", "data_quality", "for_human"]);
-  const rows = Object.entries(e).filter(([k]) => !skip.has(k)).map(([k, f]) => {
-    const value = f.value == null ? `<span class="ns">Not stated</span>` : typeof f.value === "number" ? `<span class="num">${f.value.toLocaleString()}</span>` : esc(f.value);
-    const src = f.quote ? `<q>${esc(f.quote)}</q>` : "";
+  const rows = Object.entries(e).filter(([k, f]) => !skip.has(k) && f && typeof f === "object").map(([k, f]) => {
+    const value = f.status === "unverified" ? `<span class="disc">Discarded</span>`
+      : f.value == null ? `<span class="ns">Not stated</span>` : typeof f.value === "number" ? `<span class="num">${f.value.toLocaleString()}</span>` : esc(f.value);
+    const src = f.quote ? `<q>${esc(f.quote)}</q>` : f.quote_given ? `Claude quoted <s class="gave">${esc(f.quote_given)}</s>` : "";
     const note = f.note ? `<div class="muted">${esc(f.note)}</div>` : "";
     return `<tr><td>${esc(k.replaceAll("_", " "))}</td><td>${value}${f.status === "estimate" ? ' <span class="ns">estimate</span>' : ""}</td><td>${src}${note}</td></tr>`;
   }).join("");
@@ -326,16 +360,17 @@ function dealCard(d, rank) {
     d.status === "Decline" ? `<button type="button" class="primary" data-act="Decline confirmed" data-id="${d.deal_id}">Confirm decline</button><button type="button" data-act="Overridden → sent to review" data-id="${d.deal_id}">Override: send to review</button><button type="button" data-act="Sent to producer" data-id="${d.deal_id}">Send to producer</button>`
     : d.status === "Advance" ? `<button type="button" class="primary" data-act="Sent to underwriting" data-id="${d.deal_id}">Send to underwriting</button><button type="button" data-act="Held for review" data-id="${d.deal_id}">Hold for review</button>`
     : `<button type="button" class="primary" data-act="Requested missing items" data-id="${d.deal_id}">Request missing items</button><button type="button" data-act="Sent to underwriting" data-id="${d.deal_id}">Send to underwriting</button><button type="button" data-act="Decline confirmed" data-id="${d.deal_id}">Decline</button>`;
-  return `<article class="deal s-${sk}${bmiss.length ? " below" : ""}">
-    <div class="deal-head"><span class="rank">#${rank}</span><span class="pill p-${sk}">${esc(d.status_label)}</span>${wiChip}
-      <h3>${esc(val(e, "property_name"))}</h3>
+  const removeBtn = d.added ? `<button type="button" data-remove="${esc(d.deal_id)}">Remove added deal</button>` : "";
+  return `<article class="deal s-${sk}${bmiss.length ? " below" : ""}${d.added ? " added" : ""}">
+    <div class="deal-head"><span class="rank">#${rank}</span><span class="pill p-${sk}">${esc(d.status_label)}</span>${d.added ? `<span class="added-tag" title="Screened on this page by the same rules. Not part of the official run until it goes through screen.py.">Added here · not in official run</span>` : ""}${wiChip}
+      <h3>${esc(val(e, "property_name") || "Untitled deal")}</h3>
       <span class="meta">${esc(d.deal_id)} · ${esc(val(e, "msa"))} · <span class="num">${money(val(e, "loan_amount"))}</span> · ${esc(purposeLabel(val(e, "deal_purpose")))}</span></div>
     ${barChips}
     <div class="metrics">${metrics}</div>
     ${why ? `<ul class="why">${why}</ul>` : `<p class="note">Inside the box on every criterion, with each number traced to the package.</p>`}
     ${human}
     <details><summary>Evidence: every figure and the line it came from</summary><div class="evidence"><table><thead><tr><th>Field</th><th>Value</th><th>Source in package</th></tr></thead><tbody>${rows}</tbody></table></div></details>
-    <div class="actions">${acts}</div>
+    <div class="actions">${acts}${removeBtn}</div>
   </article>`;
 }
 
@@ -355,7 +390,8 @@ function render() {
   });
   document.querySelectorAll("#bar-mode button").forEach(b => b.setAttribute("aria-pressed", b.dataset.mode === F.barMode));
   $("#bar-unknown").checked = F.barUnknown;
-  const shown = sorted(deals.filter(visible)), hidden = deals.filter(d => !visible(d));
+  const shown = sorted(all().filter(visible)), hidden = all().filter(d => !visible(d));
+  $("#runline").textContent = `Screened ${deals.length} packages · run ${DATA.run_at} · against Credit's box v${box.version}` + (ADDED.length ? ` · plus ${ADDED.length} added on this page` : "");
   $("#queue").innerHTML = shown.map((d, i) => dealCard(d, i + 1)).join("") || `<p class="note">No deals match your view. Use "Show all" above to see them.</p>`;
   const bar = $("#hidden-bar");
   if (hidden.length) {
@@ -416,13 +452,173 @@ function init() {
   $("#f-sort").onchange = ev => { F.sort = ev.target.value; render(); };
   $("#f-reset").onclick = () => { F = DEFAULTS(); render(); };
   $("#queue").addEventListener("click", ev => {
+    const rm = ev.target.closest("button[data-remove]");
+    if (rm) { removeAdded(rm.dataset.remove); return; }
     const b = ev.target.closest("button[data-act]"); if (!b) return;
-    const d = deals.find(x => x.deal_id === b.dataset.id);
+    const d = all().find(x => x.deal_id === b.dataset.id);
     LOG.unshift({ id: d.deal_id, action: b.dataset.act, at: new Date().toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"}), status: d.status, view: viewSummary() });
     $("#log").innerHTML = LOG.map(l => `<li><b>${esc(l.id)}</b> · ${esc(l.action)} · tool said <i>${esc(l.status)}</i> · ${esc(l.at)}<br><span class="muted">View: ${esc(l.view)}</span></li>`).join("");
     $("#log-empty").hidden = true; render();
   });
   render();
+  initAdd();
+}
+
+// ---------------- Add a deal ----------------
+// Claude extracts (with quotes); Engine.verify throws out anything the package doesn't support;
+// Engine.screen applies Credit's box with the same rules as screen.py. Added deals are saved in the
+// page's shared store (db) so they survive reloads, and Claude can fold them into the official run later.
+const ADD = { sample: null, db: null, unsub: null, ctl: null, md: "", filename: "" };
+const FIELDS = ["property_name", "msa", "deal_purpose", "property_type", "units", "stabilized", "value_add_or_construction", "loan_amount", "appraised_value",
+  "gross_potential_rent", "effective_gross_income", "noi", "annual_debt_service", "rent_roll_total_units", "rent_roll_occupied_units",
+  "avg_in_place_rent_monthly", "occupancy_sustained_90d", "sponsor_net_worth", "sponsor_liquidity"];
+const NUMERIC = ["units", "loan_amount", "appraised_value", "gross_potential_rent", "effective_gross_income", "noi", "annual_debt_service",
+  "rent_roll_total_units", "rent_roll_occupied_units", "avg_in_place_rent_monthly", "sponsor_net_worth", "sponsor_liquidity"];
+const PTYPES = ["multifamily", "hotel", "student_heavy", "senior_assisted", "raw_land", "single_family", "other"];
+
+function setAddStatus(text, kind = "") { const s = $("#add-status"); s.textContent = text; s.className = "add-status" + (kind ? " " + kind : ""); }
+
+function buildPrompt(md) {
+  return `You are the extraction step of a multifamily deal-screening pipeline. You read one deal package and return its facts with evidence. You decide nothing: code does all math and screening.
+
+${DATA.extraction_rules}
+
+Reply with only one JSON object, shaped exactly like this example from a DIFFERENT deal (copy the shape, never its values):
+${JSON.stringify(deals[0].extraction)}
+
+Also:
+- deal_id: the package's own deal ID if it gives one, otherwise "NEW".
+- msa: the metro name only, e.g. "Tampa".
+- deal_purpose value: "refinance", "acquisition", or null with status "not_stated".
+- Numbers are plain JSON numbers in full units ($21.5M -> 21500000; 94% -> 94; 1.30x -> 1.3). The quote must be the exact line the number came from.
+- Include every field in the example. If the package doesn't give it, use {"value": null, "status": "not_stated", "note": "..."}.
+
+<package>
+${md}
+</package>`;
+}
+
+function num(x) { if (x == null || x === "") return null; if (typeof x === "number") return isFinite(x) ? x : null; const n = parseFloat(String(x).replace(/[$,\s]/g, "")); return isFinite(n) ? n : null; }
+function bool(x) { return x === true || x === "true" ? true : x === false || x === "false" ? false : null; }
+
+// Make whatever came back conform to the schema before any check runs on it.
+function normalize(raw) {
+  const r = raw && typeof raw === "object" ? raw : {};
+  const e = { deal_id: String(r.deal_id || "NEW").slice(0, 40) };
+  for (const k of FIELDS) {
+    const f = r[k];
+    e[k] = f && typeof f === "object" && !Array.isArray(f)
+      ? { value: f.value ?? null, ...(f.quote ? { quote: String(f.quote) } : {}), status: f.status || (f.value == null ? "not_stated" : "stated"), ...(f.note ? { note: String(f.note) } : {}) }
+      : { value: null, status: "not_stated", note: "Not returned by the extraction." };
+  }
+  NUMERIC.forEach(k => { e[k].value = num(e[k].value); });
+  ["stabilized", "occupancy_sustained_90d"].forEach(k => { e[k].value = bool(e[k].value); });
+  if (e.property_type.value != null && !PTYPES.includes(e.property_type.value)) e.property_type.value = "other";
+  if (e.value_add_or_construction.value != null && !["no", "possible", "yes"].includes(e.value_add_or_construction.value)) e.value_add_or_construction.value = "possible";
+  if (!["refinance", "acquisition"].includes(e.deal_purpose.value)) e.deal_purpose = { value: null, status: "not_stated" };
+  ["property_name", "msa"].forEach(k => { if (e[k].value != null) e[k].value = String(e[k].value); });
+  const sc = r.stated_claims && typeof r.stated_claims === "object" ? r.stated_claims : {};
+  e.stated_claims = {};
+  for (const k of ["ltv_pct", "dscr", "occupancy_pct", "liquidity_months"]) {
+    const f = sc[k];
+    if (f && typeof f === "object" && num(f.value) != null) e.stated_claims[k] = { value: num(f.value), quote: String(f.quote || ""), status: f.status || "stated" };
+  }
+  const list = (a, key) => (Array.isArray(a) ? a : []).filter(x => x && x[key]).slice(0, 12).map(x => ({ [key]: String(x[key]), quote: String(x.quote || "") }));
+  e.data_quality = list(r.data_quality, "issue");
+  e.for_human = list(r.for_human, "note");
+  return e;
+}
+
+function uniqueId(id) {
+  let base = /^NEW$/i.test(id) || !id ? "NEW-" + Date.now().toString(36).slice(-5).toUpperCase() : id.replace(/[^A-Za-z0-9_-]/g, "-");
+  if (deals.some(d => d.deal_id === base)) base += "-ADDED";
+  return base;
+}
+
+function screenAdded(doc) {
+  const d = Engine.screen(doc.extraction, box);
+  d.added = true; d.added_at = doc.added_at; d.filename = doc.filename;
+  return d;
+}
+
+async function runAdd() {
+  const md = ADD.md || $("#add-paste").value.trim();
+  if (!md) { setAddStatus("Choose a file or paste a deal package first.", "err"); return; }
+  if (md.length > 120000) { setAddStatus("That package is too long to screen here. Trim it to the deal summary and exhibits.", "err"); return; }
+  const go = $("#add-go"), stop = $("#add-stop");
+  go.disabled = true; stop.hidden = false; ADD.ctl = new AbortController();
+  setAddStatus("Asking Claude to pull out the figures… this usually takes 20–60 seconds.");
+  try {
+    const raw = await ADD.sample.json(buildPrompt(md), { signal: ADD.ctl.signal, modelTier: "default" });
+    setAddStatus("Checking every quote against the package…");
+    const ext = normalize(raw);
+    ext.deal_id = uniqueId(ext.deal_id);
+    const { extraction, problems } = Engine.verify(ext, md);
+    const doc = { deal_id: extraction.deal_id, filename: ADD.filename || "pasted text", added_at: new Date().toISOString(), package_md: md, extraction, discarded: problems };
+    if (ADD.db) await ADD.db.collection("added_deals").doc(doc.deal_id).set(JSON.parse(JSON.stringify(doc)));
+    else { ADDED = ADDED.filter(d => d.deal_id !== doc.deal_id).concat(screenAdded(doc)); refreshFacets(true); render(); }
+    const d = Engine.screen(extraction, box);
+    setAddStatus(`Added ${val(extraction, "property_name") || doc.deal_id}: ${d.status}.` + (problems.length ? ` ${problems.length} figure${problems.length > 1 ? "s" : ""} thrown out because the package doesn't support ${problems.length > 1 ? "them" : "it"}.` : " Every figure matched the package.") + (ADD.db ? "" : " Saved for this visit only."), problems.length ? "" : "ok");
+    ADD.md = ""; ADD.filename = ""; $("#add-file").value = ""; $("#add-file-label").textContent = "Choose a file"; $("#add-paste").value = "";
+  } catch (err) {
+    const code = err && err.code;
+    const msg = {
+      cancelled: "Stopped.",
+      not_granted: "Claude isn't allowed on this page for you, so deals can't be added here. Add them through Claude chat instead.",
+      sampling_disabled: "Claude isn't available on this account, so deals can't be added here.",
+      rate_limited: "Too many requests just now. Try again in a minute.",
+      invalid_json: "Claude's reply couldn't be read as data. Try again.",
+      refused: "Claude declined to process this text. Check it's a deal package.",
+      prompt_too_large: "That package is too long to screen here. Trim it to the summary and exhibits.",
+      session_expired: "Your Claude sign-in expired. Sign in again, then retry.",
+    }[code] || (code ? "Something went wrong reaching Claude. Try again." : "Couldn't save the deal: " + (err && err.message || err));
+    setAddStatus(msg, code === "cancelled" ? "" : "err");
+    if (["not_granted", "sampling_disabled"].includes(code)) go.hidden = true;
+  } finally {
+    go.disabled = false; stop.hidden = true;
+  }
+}
+
+async function removeAdded(id) {
+  if (ADD.db) { try { await ADD.db.collection("added_deals").doc(id).delete(); } catch (e) { setAddStatus("Couldn't remove it: " + (e.message || e.code), "err"); } }
+  else { ADDED = ADDED.filter(d => d.deal_id !== id); render(); }
+}
+
+async function readFile(file) {
+  if (!file) return;
+  if (file.size > 500000) { setAddStatus("That file is too large for a deal package.", "err"); return; }
+  ADD.md = (await file.text()).trim(); ADD.filename = file.name;
+  $("#add-file-label").textContent = file.name;
+  setAddStatus(`Ready: ${file.name}. Press "Screen this deal".`);
+}
+
+async function initAdd() {
+  const panel = $("#add-panel");
+  $("#add-file").onchange = ev => readFile(ev.target.files[0]);
+  $("#add-paste").oninput = () => { if ($("#add-paste").value.trim()) { ADD.md = ""; ADD.filename = ""; $("#add-file-label").textContent = "Choose a file"; } };
+  panel.addEventListener("dragover", ev => { ev.preventDefault(); panel.classList.add("dragging"); });
+  panel.addEventListener("dragleave", () => panel.classList.remove("dragging"));
+  panel.addEventListener("drop", ev => { ev.preventDefault(); panel.classList.remove("dragging"); readFile(ev.dataTransfer.files[0]); });
+  $("#add-go").onclick = runAdd;
+  $("#add-stop").onclick = () => ADD.ctl && ADD.ctl.abort();
+  $("#add-go").disabled = true;
+  setAddStatus("Connecting to Claude…");
+
+  const C = window.claude;
+  [ADD.sample, ADD.db] = C ? await Promise.all([C.use("sample"), C.use("db")]) : [null, null];
+  if (!ADD.sample) {
+    $("#add-go").hidden = true;
+    setAddStatus("Adding deals works on the published page, where it can ask Claude. Here, add deals through Claude chat instead.");
+    return;
+  }
+  $("#add-go").disabled = false;
+  setAddStatus(ADD.db ? "" : "Added deals will last for this visit only.");
+  if (ADD.db) {
+    ADD.unsub = ADD.db.collection("added_deals").onSnapshot(snap => {
+      ADDED = snap.docs.map(doc => doc.data()).filter(x => x && x.extraction).map(screenAdded);
+      refreshFacets(true); render();
+    }, () => { setAddStatus("Saved deals couldn't be loaded. New ones will last for this visit only."); ADD.db = null; });
+  }
 }
 init();
 </script>

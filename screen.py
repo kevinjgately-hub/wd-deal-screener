@@ -238,16 +238,21 @@ def main():
         sys.exit("No extractions found in extractions/. Run the extraction step first.")
     res = [screen(e, box) for e in exts]
     res.sort(key=lambda r: (STATUS_ORDER[r["status"]], r["open_items"], -(r["cushion"] or -9)))
+    skill = (ROOT / "SKILL.md").read_text()
     run = {
         "run_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
         "box": box,
         "deals": res,
+        # The page's "Add a deal" uses the same extraction rules as the skill.
+        "extraction_rules": skill[skill.find("## Extraction rules"):],
     }
     out = ROOT / "out"
     out.mkdir(exist_ok=True)
     (out / "results.json").write_text(json.dumps(run, indent=2, ensure_ascii=False))
     template = (ROOT / "queue_template.html").read_text()
-    html = template.replace("/*__DATA__*/null", json.dumps(run, ensure_ascii=False).replace("</", "<\\/"))
+    engine = (ROOT / "engine.js").read_text().replace("</", "<\\/")
+    html = (template.replace("/*__ENGINE__*/", engine)
+            .replace("/*__DATA__*/null", json.dumps(run, ensure_ascii=False).replace("</", "<\\/")))
     (out / "queue.html").write_text(html)
 
     w = max(len(r["extraction"]["property_name"]["value"]) for r in res)
